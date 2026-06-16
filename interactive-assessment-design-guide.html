@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide: Designing Performance Assessments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            color: white;
+            padding: 40px 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header .meta {
+            font-size: 0.95em;
+            opacity: 0.95;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .objectives {
+            background: #f8f9fa;
+            border-left: 4px solid #2980b9;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+
+        .objectives h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .objectives ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .objectives li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin: 30px 0 15px;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.1em;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin: 15px 0;
+            line-height: 1.7;
+        }
+
+        .insight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .insight-box strong {
+            display: block;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .insight-box p {
+            color: #856404;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .knowledge-check {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .knowledge-check h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+
+        .knowledge-check .scenario {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .question-option {
+            margin: 10px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-option:hover {
+            background: #bbdefb;
+            transform: translateX(5px);
+        }
+
+        .question-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .reveal-button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .reveal-button:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        }
+
+        .answer-box {
+            display: none;
+            background: #c8e6c9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .answer-box.visible {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-box h4 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .practice-activity {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .practice-activity h3 {
+            color: #7b1fa2;
+            margin-top: 0;
+        }
+
+        .practice-activity textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid #ce93d8;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box strong {
+            color: #c62828;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .method-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .method-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+
+        .method-card h4 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .workflow-diagram {
+            background: #fafafa;
+            border: 2px solid #9e9e9e;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 25px 0;
+            font-family: monospace;
+            line-height: 2;
+        }
+
+        .final-challenge {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        .final-challenge h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255,255,255,0.5);
+            margin-top: 0;
+        }
+
+        .final-challenge h3, .final-challenge h4 {
+            color: white;
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: inherit;
+        }
+
+        .takeaways {
+            background: #1a237e;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        .takeaways h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .takeaways h3 {
+            color: #90caf9;
+        }
+
+        .checklist {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .checklist label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #2980b9, #3498db);
+            z-index: 1000;
+            transition: width 0.3s;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 8px;
+            }
+
+            .header, .content {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .nav-buttons {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        .reflection-section {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .reflection-section textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 1px solid #ffb300;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">🎓</span> Interactive Guide: Designing Performance Assessments & Learning Strategies</h1>
+            <div class="meta">
+                <span><strong>Target Audience:</strong> Instructional Designers, L&D Professionals, Training Managers</span>
+                <span><strong>Estimated Time:</strong> 60-75 minutes (self-paced)</span>
+                <span><strong>Format:</strong> Interactive workbook</span>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div class="objectives">
+                <h2><span class="emoji">🎯</span> Learning Objectives</h2>
+                <p>By the end of this guide, you will be able to:</p>
+                <ol>
+                    <li><strong>Distinguish</strong> between evaluation types and select the appropriate approach for workplace training</li>
+                    <li><strong>Apply</strong> the three quality criteria (reliable, valid, fair) to evaluate assessment design</li>
+                    <li><strong>Match</strong> assessment methods to learning domains (cognitive, psychomotor, affective)</li>
+                    <li><strong>Select</strong> instructional methods and modalities based on learning objectives</li>
+                    <li><strong>Design</strong> a complete assessment strategy for a real-world training scenario</li>
+                </ol>
+            </div>
+
+            <hr style="border: none; border-top: 2px solid #e0e0e0; margin: 40px 0;">
+
+            <h2><span class="emoji">📚</span> Part 1: Understanding Performance Assessments</h2>
+
+            <h3>Core Concepts You Need to Know</h3>
+
+            <p><strong>Evaluation vs. Measurement</strong></p>
+            <ul>
+                <li><strong>Evaluation</strong> = Judging quality based on comparison to a standard</li>
+                <li><strong>Measurement</strong> = Determining how much of something exists</li>
+            </ul>
+
+            <p><strong>Assessment Types</strong></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Compares To</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Norm-referenced</strong></td>
+                        <td>Other learners</td>
+                        <td>Academic settings, ranking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Criterion-referenced</strong> <span class="emoji">✅</span></td>
+                        <td>A fixed standard</td>
+                        <td>Workplace training, competency</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formative</strong></td>
+                        <td>Ongoing during learning</td>
+                        <td>Feedback, improvement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Summative</strong></td>
+                        <td>Final evaluation</td>
+                        <td>Certification, completion</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box">
+                <strong><span class="emoji">💡</span> Workplace Insight</strong>
+                <p>In corporate learning (like customer service training), you almost always want: <strong>Criterion-referenced + Formative feedback</strong></p>
+                <p><strong>Why?</strong> You need people to meet a specific performance standard, and you want to help them improve along the way—not compare them to each other.</p>
+            </div>
+
+            <div class="knowledge-check" id="check1">
+                <h3><span class="emoji">✅</span> Knowledge Check 1: Concept Application</h3>
+                <div class="scenario">
+                    <strong>Scenario:</strong> You're designing a customer service training program for new hires at a tech company.
+                </div>
+                <p><strong>Question:</strong> Which assessment approach should you use?</p>
+                <div class="question-option">
+                    <input type="checkbox" id="q1a"> <label for="q1a">A. Norm-referenced + Summative (rank new hires, test at the end)</label>
+                </div>
+                <div class="question-option">
+                    <input type="checkbox" id="q1b"> <label for="q1b">B. Criterion-referenced + Formative (compare to standard, provide ongoing feedback)</label>
+                </div>
+                <div class="question-option">
+                    <input type="checkbox" id="q1c"> <label for="q1c">C. Norm-referenced + Formative (compare to others, ongoing feedback)</label>
+                </div>
+                <div class="question-option">
+                    <input type="checkbox" id="q1d"> <label for="q1d">D. Criterion-referenced + Summative (compare to standard, test at the end only)</label>
+                </div>
+                <button class="reveal-button" onclick="toggleAnswer('answer1')">Reveal Answer</button>
+                <div class="answer-box" id="answer1">
+                    <h4>Answer: B - Criterion-referenced + Formative</h4>
+                    <p><strong>Why:</strong></p>
+                    <ul>
+                        <li>You need everyone to meet the same customer service standard (criterion-referenced)</li>
+                        <li>You want to provide coaching and feedback during training so people can improve (formative)</li>
+                        <li>Ranking employees against each other (norm-referenced) doesn't help them meet the required standard</li>
+                        <li>Only testing at the end (summative only) misses opportunities to course-correct during learning</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2><span class="emoji">🎯</span> Part 2: What Makes a "Good" Assessment?</h2>
+
+            <h3>The Three Essential Qualities</h3>
+
+            <p>Every assessment must be:</p>
+
+            <div class="method-card">
+                <h4>1. Reliable → Produces consistent results</h4>
+                <ul>
+                    <li><strong>Example:</strong> If I take the test twice, I get similar scores</li>
+                    <li><strong>Bad example:</strong> Test scores vary wildly based on which version someone gets</li>
+                </ul>
+            </div>
+
+            <div class="method-card">
+                <h4>2. Valid → Measures what it's supposed to measure</h4>
+                <ul>
+                    <li><strong>Example:</strong> A typing test measures typing speed</li>
+                    <li><strong>Bad example:</strong> Multiple choice questions to assess hands-on repair skills</li>
+                </ul>
+            </div>
+
+            <div class="method-card">
+                <h4>3. Fair → Equitable for all learners</h4>
+                <ul>
+                    <li><strong>Example:</strong> Clear instructions, accessible format, no bias</li>
+                    <li><strong>Bad example:</strong> Using complex academic language for frontline workers</li>
+                </ul>
+            </div>
+
+            <div class="practice-activity" id="practice1">
+                <h3><span class="emoji">🔍</span> Practice Activity: Assessment Quality Audit</h3>
+                <p><strong>Instructions:</strong> Read each scenario and identify which quality criterion is violated.</p>
+
+                <p><strong>Scenario 1:</strong><br>
+                A customer service assessment asks agents to write a 500-word essay about conflict resolution. However, the role only requires verbal communication—no written reports.</p>
+                <p>This violates: <input type="text" class="challenge-input" placeholder="Type your answer here"></p>
+
+                <p><strong>Scenario 2:</strong><br>
+                A sales training quiz has two versions. Version A has straightforward questions; Version B uses confusing wording. Version B scores average 30% lower.</p>
+                <p>This violates: <input type="text" class="challenge-input" placeholder="Type your answer here"></p>
+
+                <p><strong>Scenario 3:</strong><br>
+                A technical assessment requires reading dense engineering specifications. Non-native English speakers consistently score lower, even though they demonstrate the technical skills perfectly in hands-on tasks.</p>
+                <p>This violates: <input type="text" class="challenge-input" placeholder="Type your answer here"></p>
+
+                <button class="reveal-button" onclick="toggleAnswer('answer2')">Reveal Answers</button>
+                <div class="answer-box" id="answer2">
+                    <h4>Answers:</h4>
+                    <ol>
+                        <li><strong>Validity</strong> - The assessment doesn't measure what matters (verbal communication), it measures something else (writing)</li>
+                        <li><strong>Reliability</strong> - The assessment produces inconsistent results based on which version someone gets</li>
+                        <li><strong>Fairness</strong> - The assessment disadvantages one group despite them having the required skills</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2><span class="emoji">📋</span> Part 3: Effective Evaluation Planning Framework</h2>
+
+            <p>When designing any assessment, include these seven elements:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>What It Means</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Clarity</strong></td>
+                        <td>Clear criteria for success</td>
+                        <td>"Score 85% or higher on customer handling scenarios"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Specificity</strong></td>
+                        <td>Precise expectations</td>
+                        <td>"Demonstrate 3-step de-escalation process in role play"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Immediacy</strong></td>
+                        <td>Fast feedback</td>
+                        <td>"Receive feedback within 24 hours"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accessibility</strong></td>
+                        <td>Discussion opportunities</td>
+                        <td>"Debrief session after assessment"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Affirmation</strong></td>
+                        <td>Recognize effort</td>
+                        <td>"Acknowledge progress, not just final score"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Future-orientation</strong></td>
+                        <td>Next steps</td>
+                        <td>"Here's what to practice next"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Justifiability</strong></td>
+                        <td>Why it matters</td>
+                        <td>"This skill prevents customer churn"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2><span class="emoji">🔬</span> Part 4: Matching Assessment Methods to Learning Domains</h2>
+
+            <div class="warning-box">
+                <strong><span class="emoji">⚠️</span> The Critical Alignment Rule</strong>
+                <p>Always align: <strong>Learning Objective → Learning Domain → Assessment Type</strong></p>
+            </div>
+
+            <h3>Assessment Methods by Domain</h3>
+
+            <h4><span class="emoji">🧠</span> Cognitive Domain (Knowledge & Thinking)</h4>
+            <p><strong>Best for:</strong> Remembering facts, understanding concepts, analyzing, evaluating</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assessment Type</th>
+                        <th>When to Use</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Multiple Choice</td>
+                        <td>Large-scale knowledge checks</td>
+                        <td>"Which of these is the correct refund policy?"</td>
+                    </tr>
+                    <tr>
+                        <td>True/False</td>
+                        <td>Quick recall verification</td>
+                        <td>"Customers can return opened software: T/F"</td>
+                    </tr>
+                    <tr>
+                        <td>Short Answer</td>
+                        <td>Quick recall with explanation</td>
+                        <td>"What are the 3 steps in our greeting protocol?"</td>
+                    </tr>
+                    <tr>
+                        <td>Essay</td>
+                        <td>Deep thinking (why/how)</td>
+                        <td>"Analyze why this customer interaction failed"</td>
+                    </tr>
+                    <tr>
+                        <td>Matching</td>
+                        <td>Relationships between concepts</td>
+                        <td>"Match each product feature to its benefit"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4><span class="emoji">🛠️</span> Psychomotor Domain (Physical Skills)</h4>
+            <p><strong>Best for:</strong> Operating equipment, performing procedures, demonstrating techniques</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assessment Type</th>
+                        <th>When to Use</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Checklist</strong> <span class="emoji">✅</span></td>
+                        <td>Yes/no behaviors</td>
+                        <td>"Did the agent open the correct system?" ☐ Yes ☐ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rating Scale</strong> <span class="emoji">✅</span></td>
+                        <td>Quality of performance</td>
+                        <td>"Navigation speed: 1=Slow, 5=Expert"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Test</strong> <span class="emoji">✅</span></td>
+                        <td>Real-time demonstration</td>
+                        <td>"Complete a full ticket workflow while observed"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong><span class="emoji">⚠️</span> CRITICAL:</strong>
+                <p>Never use multiple choice questions to assess hands-on skills!</p>
+            </div>
+
+            <h4><span class="emoji">❤️</span> Affective Domain (Attitudes & Values)</h4>
+            <p><strong>Best for:</strong> Measuring engagement, confidence, professional identity</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assessment Type</th>
+                        <th>When to Use</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Journals/Reflections</td>
+                        <td>Personal insights</td>
+                        <td>"Reflect on a challenging customer interaction"</td>
+                    </tr>
+                    <tr>
+                        <td>Rating Scales</td>
+                        <td>Attitude measurement</td>
+                        <td>"How confident are you handling escalations? 1-5"</td>
+                    </tr>
+                    <tr>
+                        <td>Discussions</td>
+                        <td>Group dialogue</td>
+                        <td>"What does customer-first service mean to you?"</td>
+                    </tr>
+                    <tr>
+                        <td>Observations</td>
+                        <td>Behavioral indicators</td>
+                        <td>"Observing empathy in customer interactions"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="knowledge-check" id="check2">
+                <h3><span class="emoji">✅</span> Knowledge Check 2: Domain Matching Challenge</h3>
+                <p><strong>Instructions:</strong> For each learning objective, identify the domain and recommend the best assessment type.</p>
+
+                <div class="scenario">
+                    <strong>Objective 1:</strong> "Agents will navigate the CRM system to update customer records within 2 minutes."
+                    <p>Domain: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                    <p>Best Assessment: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                </div>
+
+                <div class="scenario">
+                    <strong>Objective 2:</strong> "Agents will explain the three-tier escalation policy."
+                    <p>Domain: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                    <p>Best Assessment: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                </div>
+
+                <div class="scenario">
+                    <strong>Objective 3:</strong> "Agents will value the importance of empathy in customer interactions."
+                    <p>Domain: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                    <p>Best Assessment: <input type="text" class="challenge-input" placeholder="Your answer"></p>
+                </div>
+
+                <button class="reveal-button" onclick="toggleAnswer('answer3')">Reveal Answers</button>
+                <div class="answer-box" id="answer3">
+                    <h4>Answers:</h4>
+                    <p><strong>Objective 1:</strong></p>
+                    <ul>
+                        <li>Domain: <strong>Psychomotor</strong> (navigating/operating a system)</li>
+                        <li>Best Assessment: <strong>Performance test with checklist</strong> - Observe them actually doing it</li>
+                    </ul>
+                    <p><strong>Objective 2:</strong></p>
+                    <ul>
+                        <li>Domain: <strong>Cognitive</strong> (knowledge/understanding)</li>
+                        <li>Best Assessment: <strong>Short answer or MCQ</strong> - They need to recall and explain</li>
+                    </ul>
+                    <p><strong>Objective 3:</strong></p>
+                    <ul>
+                        <li>Domain: <strong>Affective</strong> (attitudes/values)</li>
+                        <li>Best Assessment: <strong>Reflection journal or discussion</strong> - Measuring belief/attitude</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2><span class="emoji">🎓</span> Part 5: Choosing Instructional Methods</h2>
+
+            <h3>The Two Key Questions</h3>
+            <p>Before selecting any instructional method, ask:</p>
+            <ol>
+                <li><strong>Are learners gaining knowledge, skills, or attitudes?</strong></li>
+                <li><strong>What should they be able to DO afterward?</strong></li>
+            </ol>
+
+            <h3>Instructional Methods by Purpose</h3>
+
+            <div class="method-card">
+                <h4><span class="emoji">💡</span> Knowledge-Building Methods</h4>
+                <p><em>Use when learners need to understand concepts, policies, or information</em></p>
+                <ul>
+                    <li>Lecturette (short presentation)</li>
+                    <li>Readings</li>
+                    <li>Large group discussion</li>
+                    <li>Video</li>
+                    <li>Case studies</li>
+                </ul>
+                <p><strong>Example:</strong> Teaching company policies → Use lecturette + reading</p>
+            </div>
+
+            <div class="method-card">
+                <h4><span class="emoji">🛠️</span> Skill-Based Methods <span class="emoji">⭐</span> <em>Most valuable for workplace training</em></h4>
+                <p><em>Use when learners need to perform tasks or demonstrate competencies</em></p>
+                <ul>
+                    <li><strong>Role play</strong> - Practice interpersonal skills</li>
+                    <li><strong>Simulation</strong> - Safe environment to practice high-risk scenarios</li>
+                    <li><strong>Practice & feedback</strong> - Repetition with coaching</li>
+                    <li><strong>Demonstration</strong> - Show then do</li>
+                    <li><strong>On-the-job training (OJT)</strong> - Learn while working</li>
+                </ul>
+                <div class="workflow-diagram">
+                    The OJT Formula:<br>
+                    Tell → Show → Do → Feedback
+                </div>
+                <p><strong>Example:</strong> Teaching software navigation → Use demonstration + practice & feedback</p>
+            </div>
+
+            <div class="method-card">
+                <h4><span class="emoji">🤝</span> Collaborative Learning Methods</h4>
+                <p><em>Use when learners benefit from peer interaction and diverse perspectives</em></p>
+                <ul>
+                    <li>Small group discussion</li>
+                    <li>Buzz groups (quick partner discussions)</li>
+                    <li>Brainstorming</li>
+                    <li>Fishbowl (inner circle discusses, outer observes)</li>
+                    <li>Debate</li>
+                </ul>
+                <p><strong>Example:</strong> Exploring customer service scenarios → Use small group discussion</p>
+            </div>
+
+            <div class="method-card">
+                <h4><span class="emoji">🔍</span> Reflective Learning Methods</h4>
+                <p><em>Use when learners need to internalize experiences and build self-awareness</em></p>
+                <ul>
+                    <li>Journaling</li>
+                    <li>Storytelling</li>
+                    <li>Metaphor analysis</li>
+                </ul>
+                <p><strong>Example:</strong> Building empathy → Use storytelling + reflection</p>
+            </div>
+
+            <div class="knowledge-check" id="check3">
+                <h3><span class="emoji">✅</span> Knowledge Check 3: Method Selection</h3>
+                <p><strong>For each objective, choose the BEST instructional method:</strong></p>
+
+                <div class="scenario">
+                    <strong>Objective 1:</strong> "Customer service agents will demonstrate the 5-step de-escalation process during difficult customer calls."
+                    <div class="question-option">
+                        <input type="checkbox" id="q3a1"> <label for="q3a1">A. Lecturette about de-escalation</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3a2"> <label for="q3a2">B. Read case studies of difficult calls</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3a3"> <label for="q3a3">C. Role play difficult customer scenarios with feedback</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3a4"> <label for="q3a4">D. Watch a video about de-escalation</label>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Objective 2:</strong> "Managers will understand the new remote work policy."
+                    <div class="question-option">
+                        <input type="checkbox" id="q3b1"> <label for="q3b1">A. Role play policy scenarios</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3b2"> <label for="q3b2">B. Lecturette + reading + Q&A discussion</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3b3"> <label for="q3b3">C. Simulation of remote work</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3b4"> <label for="q3b4">D. Journaling about remote work</label>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <strong>Objective 3:</strong> "Team members will value diverse perspectives in problem-solving."
+                    <div class="question-option">
+                        <input type="checkbox" id="q3c1"> <label for="q3c1">A. Lecture about diversity</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3c2"> <label for="q3c2">B. Practice solving problems</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3c3"> <label for="q3c3">C. Small group discussion + reflection on how different approaches helped</label>
+                    </div>
+                    <div class="question-option">
+                        <input type="checkbox" id="q3c4"> <label for="q3c4">D. Quiz on diversity concepts</label>
+                    </div>
+                </div>
+
+                <button class="reveal-button" onclick="toggleAnswer('answer4')">Reveal Answers</button>
+                <div class="answer-box" id="answer4">
+                    <h4>Answers:</h4>
+                    <p><strong>Objective 1: C - Role play</strong></p>
+                    <ul>
+                        <li>This is a <strong>skill</strong> (psychomotor) - they need to DO it</li>
+                        <li>Role play lets them practice the behavior with coaching</li>
+                    </ul>
+                    <p><strong>Objective 2: B - Lecturette + reading + Q&A</strong></p>
+                    <ul>
+                        <li>This is <strong>knowledge</strong> (cognitive) - they need to understand information</li>
+                        <li>Lecture and reading are efficient for information transfer</li>
+                    </ul>
+                    <p><strong>Objective 3: C - Small group discussion + reflection</strong></p>
+                    <ul>
+                        <li>This is an <strong>attitude</strong> (affective) - they need to value something</li>
+                        <li>Discussion lets them experience diverse perspectives; reflection internalizes it</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2><span class="emoji">🚀</span> Part 6: Selecting Delivery Modalities</h2>
+
+            <div class="workflow-diagram">
+Step 1: What's the learning domain?<br>
+   └─> Psychomotor (skill)? → Favor synchronous, hands-on methods<br>
+<br>
+Step 2: How complex is it?<br>
+   └─> Complex/High-risk? → Favor live instruction with feedback<br>
+<br>
+Step 3: How big is your audience?<br>
+   └─> Large + Geographically dispersed? → Consider asynchronous eLearning<br>
+<br>
+Step 4: What resources do you have?<br>
+   └─> Limited budget/time? → Asynchronous scales better
+            </div>
+
+            <h3>Synchronous (Real-Time) Modalities</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modality</th>
+                        <th>Best For</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>In-Person Classroom</strong></td>
+                        <td>Complex skills, high interaction</td>
+                        <td>New hire onboarding with role plays</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Virtual Classroom/Webinar</strong></td>
+                        <td>Knowledge + discussion, dispersed teams</td>
+                        <td>Policy update webinar with Q&A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>On-the-Job Training (OJT)</strong></td>
+                        <td>Practical skills, immediate application</td>
+                        <td>Shadowing a senior agent</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Pros:</strong> Immediate feedback, relationship building, real-time clarification<br>
+            <strong>Cons:</strong> Scheduling challenges, travel costs (in-person), limited scalability</p>
+
+            <h3>Asynchronous (Self-Paced) Modalities</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modality</th>
+                        <th>Best For</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>eLearning (interactive)</strong></td>
+                        <td>Knowledge + some skills, large audiences</td>
+                        <td>Software tutorial with practice modules</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Self-Study (readings, videos)</strong></td>
+                        <td>Foundational knowledge</td>
+                        <td>Pre-work before live training</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Social/Collaborative Platforms</strong></td>
+                        <td>Peer learning, ongoing support</td>
+                        <td>Discussion forum for troubleshooting</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Pros:</strong> Flexible timing, scales easily, cost-effective<br>
+            <strong>Cons:</strong> Less immediate feedback, requires self-motivation, harder for complex skills</p>
+
+            <div class="checklist">
+                <h3><span class="emoji">📊</span> eLearning Readiness Checklist</h3>
+                <p>Before committing to eLearning, evaluate:</p>
+                <label><input type="checkbox"> <strong>Content fit:</strong> Can this be learned without live instructor?</label>
+                <label><input type="checkbox"> <strong>Learner readiness:</strong> Do they have basic tech skills?</label>
+                <label><input type="checkbox"> <strong>Infrastructure:</strong> Is the LMS/platform ready?</label>
+                <label><input type="checkbox"> <strong>Leadership support:</strong> Is there buy-in from management?</label>
+                <label><input type="checkbox"> <strong>ROI potential:</strong> Will it save time or cost compared to alternatives?</label>
+            </div>
+
+            <h2><span class="emoji">🎨</span> Part 7: Putting It All Together</h2>
+
+            <h3>The Complete Design Workflow</h3>
+
+            <div class="workflow-diagram">
+1. Write Learning Objective<br>
+        ↓<br>
+2. Identify Domain (Cognitive/Psychomotor/Affective)<br>
+        ↓<br>
+3. Select Assessment Method (Aligned to domain)<br>
+        ↓<br>
+4. Select Instructional Method (Aligned to objective)<br>
+        ↓<br>
+5. Select Modality (Based on constraints)<br>
+        ↓<br>
+6. Verify Alignment (Check all pieces fit together)
+            </div>
+
+            <h3><span class="emoji">🧠</span> Quick Reference Table</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Domain</th>
+                        <th>Best Method</th>
+                        <th>Best Assessment</th>
+                        <th>Suggested Modality</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Learn policy</td>
+                        <td>Cognitive</td>
+                        <td>Lecture, reading</td>
+                        <td>MCQ, short answer</td>
+                        <td>Asynchronous eLearning</td>
+                    </tr>
+                    <tr>
+                        <td>Operate software</td>
+                        <td>Psychomotor</td>
+                        <td>Demo + practice</td>
+                        <td>Performance test, checklist</td>
+                        <td>Synchronous (virtual or OJT)</td>
+                    </tr>
+                    <tr>
+                        <td>Handle difficult customers</td>
+                        <td>Psychomotor + Affective</td>
+                        <td>Role play, simulation</td>
+                        <td>Rating scale, observation</td>
+                        <td>Synchronous in-person</td>
+                    </tr>
+                    <tr>
+                        <td>Value teamwork</td>
+                        <td>Affective</td>
+                        <td>Discussion, storytelling</td>
+                        <td>Reflection, journal</td>
+                        <td>Synchronous (virtual or in-person)</td>
+                    </tr>
+                    <tr>
+                        <td>Troubleshoot problems</td>
+                        <td>Cognitive</td>
+                        <td>Case study, practice</td>
+                        <td>Scenario-based test</td>
+                        <td>Blended (eLearning + live practice)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="final-challenge">
+                <h2><span class="emoji">🏆</span> Final Challenge: Design Your Own Assessment Strategy</h2>
+
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 4px; margin: 20px 0;">
+                    <p><strong>Scenario:</strong> You are an instructional designer at a customer support company. You need to design training for a new product launch.</p>
+
+                    <p><strong>Training Details:</strong></p>
+                    <ul>
+                        <li><strong>Audience:</strong> 100 customer support agents (entry to mid-level)</li>
+                        <li><strong>Objective:</strong> "Agents will troubleshoot and resolve common customer issues with the new product, achieving 90% first-call resolution within 30 days."</li>
+                        <li><strong>Constraints:</strong></li>
+                        <ul>
+                            <li>Agents are across 3 time zones</li>
+                            <li>Product launches in 4 weeks</li>
+                            <li>Budget: $50,000</li>
+                            <li>Must track competency achievement</li>
+                        </ul>
+                    </ul>
+                </div>
+
+                <h3>Your Design Task</h3>
+
+                <h4>1. What is the primary learning domain?</h4>
+                <textarea class="challenge-input" placeholder="Type your answer and justification here..."></textarea>
+
+                <h4>2. What assessment method(s) will you use?</h4>
+                <textarea class="challenge-input" placeholder="List and justify your choices..."></textarea>
+
+                <h4>3. What instructional method(s) will you use?</h4>
+                <textarea class="challenge-input" placeholder="Describe your learning sequence..."></textarea>
+
+                <h4>4. What modality/modalities will you use?</h4>
+                <textarea class="challenge-input" placeholder="Design your blended approach..."></textarea>
+
+                <h4>5. How will you ensure quality? (Reliable, Valid, Fair)</h4>
+                <textarea class="challenge-input" placeholder="Describe your quality assurance strategy..."></textarea>
+
+                <h4>6. How will you provide formative feedback?</h4>
+                <textarea class="challenge-input" placeholder="Describe your feedback strategy..."></textarea>
+
+                <button class="reveal-button" onclick="toggleAnswer('answer5')" style="background: white; color: #ee5a6f;">View Sample Solution</button>
+                <div class="answer-box" id="answer5">
+                    <h4>Sample Solution (many approaches work!)</h4>
+
+                    <p><strong>1. Primary Domain: Psychomotor (Skill)</strong><br>
+                    The objective is about troubleshooting and resolving issues—this is a performance skill, not just knowledge.</p>
+
+                    <p><strong>2. Assessment Methods:</strong></p>
+                    <ul>
+                        <li>✅ Performance-based simulation - Safe practice environment</li>
+                        <li>✅ Checklist during live calls - Verify competency</li>
+                        <li>✅ Case study analysis - Test troubleshooting logic</li>
+                    </ul>
+
+                    <p><strong>3. Instructional Method Sequence:</strong></p>
+                    <ol>
+                        <li>eLearning modules - Product knowledge foundation</li>
+                        <li>Lecturette - Live product demo (30 min)</li>
+                        <li>Case study analysis - Small group troubleshooting</li>
+                        <li>Role play / Simulation - Practice scenarios</li>
+                        <li>On-the-job coaching - Supervised live calls</li>
+                    </ol>
+
+                    <p><strong>4. Modality Strategy:</strong></p>
+                    <ul>
+                        <li><strong>Week 1-2 (Asynchronous):</strong> Self-paced eLearning + knowledge checks</li>
+                        <li><strong>Week 3 (Synchronous Virtual):</strong> Live demos + breakout case studies</li>
+                        <li><strong>Week 3-4 (OJT):</strong> Simulations + monitored calls with coaching</li>
+                        <li><strong>Ongoing:</strong> Discussion forum for peer support</li>
+                    </ul>
+
+                    <p><strong>5. Quality Assurance:</strong></p>
+                    <ul>
+                        <li><strong>Reliability:</strong> Standardized checklist, trained coaches, consistent scenarios</li>
+                        <li><strong>Validity:</strong> Assessment mirrors real work (actual customer scenarios)</li>
+                        <li><strong>Fairness:</strong> Multiple time zones, mobile/desktop access, clear criteria</li>
+                    </ul>
+
+                    <p><strong>6. Formative Feedback:</strong></p>
+                    <ul>
+                        <li>Immediate feedback on eLearning knowledge checks</li>
+                        <li>3-2-1 feedback during role play (3 strengths, 2 improvements, 1 practice focus)</li>
+                        <li>Real-time coaching during call monitoring</li>
+                        <li>Daily 10-minute debrief sessions</li>
+                        <li>Weekly progress tracker with checklist scores</li>
+                    </ul>
+
+                    <p><strong>Summative Assessment (30 days):</strong> Monitor 5 live calls with 90% FCR requirement</p>
+                </div>
+            </div>
+
+            <div class="takeaways">
+                <h2><span class="emoji">📚</span> Key Takeaways</h2>
+
+                <h3>The Non-Negotiables</h3>
+                <ol>
+                    <li>✅ <strong>Always use criterion-referenced + formative assessment</strong> in workplace training</li>
+                    <li>✅ <strong>Never use MCQs to assess hands-on skills</strong> (psychomotor domain)</li>
+                    <li>✅ <strong>Always align:</strong> Objective → Domain → Assessment → Method → Modality</li>
+                    <li>✅ <strong>Every assessment must be:</strong> Reliable, Valid, Fair</li>
+                    <li>✅ <strong>Skill-based training needs:</strong> Practice + Feedback + Observation</li>
+                </ol>
+
+                <div class="checklist">
+                    <h3>Your Design Checklist</h3>
+                    <p>Before finalizing any training design, verify:</p>
+                    <label><input type="checkbox"> Learning objectives clearly state what learners will DO</label>
+                    <label><input type="checkbox"> Assessment method matches the learning domain</label>
+                    <label><input type="checkbox"> Assessment is valid (measures the right thing)</label>
+                    <label><input type="checkbox"> Assessment is reliable (consistent results)</label>
+                    <label><input type="checkbox"> Assessment is fair (equitable for all)</label>
+                    <label><input type="checkbox"> Instructional method aligns with objective</label>
+                    <label><input type="checkbox"> Modality fits constraints (time, budget, audience)</label>
+                    <label><input type="checkbox"> Formative feedback is built into the learning experience</label>
+                    <label><input type="checkbox"> There's a clear path from learning to performance</label>
+                </div>
+            </div>
+
+            <div class="reflection-section">
+                <h2><span class="emoji">📝</span> Reflection Questions</h2>
+                <p>Take 5 minutes to reflect on what you've learned:</p>
+
+                <p><strong>1. What was the most valuable insight from this guide?</strong></p>
+                <textarea placeholder="Type your reflection here..."></textarea>
+
+                <p><strong>2. Which concept challenged your previous assumptions?</strong></p>
+                <textarea placeholder="Type your reflection here..."></textarea>
+
+                <p><strong>3. What will you do differently in your next training design?</strong></p>
+                <textarea placeholder="Type your reflection here..."></textarea>
+
+                <p><strong>4. What questions do you still have?</strong></p>
+                <textarea placeholder="Type your reflection here..."></textarea>
+            </div>
+
+            <div class="success-box" style="text-align: center; padding: 30px; margin: 40px 0;">
+                <h2 style="margin: 0;"><span class="emoji">🎓</span> Congratulations!</h2>
+                <p style="font-size: 1.1em; margin: 15px 0;">You've completed the Interactive Guide to Designing Performance Assessments & Learning Strategies.</p>
+                <p>You now have a framework to design assessments and learning experiences that are aligned, valid, and effective.</p>
+                <p style="font-weight: bold; margin-top: 20px;">Remember: Great instructional design always starts with clarity about what learners need to DO, not just what they need to KNOW.</p>
+            </div>
+
+            <hr style="border: none; border-top: 2px solid #e0e0e0; margin: 40px 0;">
+
+            <p style="text-align: center; color: #666; font-size: 0.9em;">
+                <em>Created using professional instructional design principles</em><br>
+                Version 1.0 | June 2026
+            </p>
+
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Top</button>
+    </div>
+
+    <script>
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            answer.classList.toggle('visible');
+        }
+
+        // Progress bar on scroll
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Auto-save text inputs to localStorage
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
+        inputs.forEach(input => {
+            const key = 'assessment_guide_' + input.placeholder;
+            input.value = localStorage.getItem(key) || '';
+            input.addEventListener('input', () => {
+                localStorage.setItem(key, input.value);
+            });
+        });
+
+        // Print functionality
+        function printGuide() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
